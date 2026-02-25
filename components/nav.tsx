@@ -22,55 +22,53 @@ export default function Nav() {
     <>
       <nav className="border-b border-border/70 bg-background/90 backdrop-blur">
         <div className="mx-auto w-full max-w-6xl border-x border-border frame-corners-bottom">
-          <div className="flex items-center justify-between px-4 py-4">
-            <Logo />
-            <div className="hidden items-center gap-6 text-sm md:flex">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {item.label}
-                </a>
-              ))}
+          <div className="flex items-stretch justify-between px-4">
+            <div className="flex items-center py-4">
+              <Logo />
             </div>
-            <div className="hidden items-center gap-3 md:flex">
-              {isAuthenticated ? (
-                <>
-                  <button
-                    onClick={() => setCommandOpen(true)}
-                    className="flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+            <div className="ml-auto hidden items-stretch gap-3 md:flex">
+              <div className="flex items-center gap-8 border-x border-border px-6 text-sm">
+                {navItems.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="text-muted-foreground transition-colors hover:text-foreground"
                   >
-                    <Command className="size-3" />
-                    Command
-                  </button>
-                  <Link
-                    href="/dashboard"
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    Dashboard
-                  </Link>
-                  <Button variant="outline" onClick={() => void signOut()}>
-                    Sign out
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/signin"
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    Sign in
-                  </Link>
-                  <Button asChild>
-                    <Link href={siteConfig.nav.cta.href}>{siteConfig.nav.cta.label}</Link>
-                  </Button>
-                </>
-              )}
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+              <div className="flex items-center gap-10 px-4 py-4">
+                {isAuthenticated ? (
+                  <>
+                    <button
+                      onClick={() => setCommandOpen(true)}
+                      className="flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      <Command className="size-3" />
+                      Command
+                    </button>
+                    <Link
+                      href="/dashboard"
+                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      Dashboard
+                    </Link>
+                    <Button variant="outline" onClick={() => void signOut()}>
+                      Sign out
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button asChild className="px-6">
+                      <Link href="/signin">{siteConfig.nav.cta.label}</Link>
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
             <button
-              className="md:hidden flex items-center justify-center size-9 rounded-full border border-border"
+              className="md:hidden my-4 flex items-center justify-center size-9 rounded-full border border-border"
               onClick={() => setOpen((prev) => !prev)}
               aria-label="Toggle menu"
             >
@@ -117,15 +115,10 @@ export default function Nav() {
                 </>
               ) : (
                 <>
-                  <Link
-                    href="/signin"
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                    onClick={() => setOpen(false)}
-                  >
-                    Sign in
-                  </Link>
-                  <Button asChild>
-                    <Link href={siteConfig.nav.cta.href}>{siteConfig.nav.cta.label}</Link>
+                  <Button asChild className="px-6">
+                    <Link href="/signin" onClick={() => setOpen(false)}>
+                      {siteConfig.nav.cta.label}
+                    </Link>
                   </Button>
                 </>
               )}
