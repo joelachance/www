@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Github, Linkedin, MessageCircle } from "lucide-react";
+import { Github, MessageCircle } from "lucide-react";
 import ThemeToggle from "@/components/theme-toggle";
 import { siteConfig } from "@/config";
 
@@ -13,6 +13,14 @@ function XLogoIcon() {
   );
 }
 
+function LinkedInLogoIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">
+      <path d="M20.45 20.45h-3.554v-5.569c0-1.328-.027-3.036-1.851-3.036-1.853 0-2.136 1.447-2.136 2.94v5.665H9.355V9h3.413v1.561h.049c.476-.9 1.637-1.85 3.369-1.85 3.602 0 4.267 2.37 4.267 5.455v6.284ZM5.347 7.434a2.063 2.063 0 1 1 0-4.127 2.063 2.063 0 0 1 0 4.127ZM7.124 20.45H3.566V9h3.558v11.45ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z" />
+    </svg>
+  );
+}
+
 export default function Footer() {
   const [mounted, setMounted] = useState(false);
 
@@ -20,7 +28,7 @@ export default function Footer() {
     x: <XLogoIcon />,
     github: <Github className="h-4 w-4" />,
     discord: <MessageCircle className="h-4 w-4" />,
-    linkedin: <Linkedin className="h-4 w-4" />,
+    linkedin: <LinkedInLogoIcon />,
   };
 
   useEffect(() => {
@@ -40,8 +48,8 @@ export default function Footer() {
             {siteConfig.footer.subhead}
           </p>
         </div>
-        <div className="grid gap-4 text-sm">
-          <div className="flex flex-col gap-2">
+        <div className="grid justify-items-end gap-4 text-right text-sm">
+          <div className="flex flex-col items-end gap-2">
             {siteConfig.footer.links.map((item) => (
               <a
                 key={item.label}
@@ -52,7 +60,7 @@ export default function Footer() {
               </a>
             ))}
           </div>
-          <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
+          <div className="flex flex-wrap justify-end gap-3 text-xs text-muted-foreground">
             {siteConfig.social.map((item) => (
               <a
                 key={item.label}
