@@ -61,6 +61,7 @@
   --color-ring: var(--ring);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-pixel: var(--font-geist-pixel-square);
   --font-flauta: var(--font-flauta);
   --font-apple-garamond: var(--font-apple-garamond);
   --font-fk-grotesk-black: var(--font-fk-grotesk-black);
@@ -101,6 +102,9 @@ body {
   }
   .font-mono-soft {
     font-family: var(--font-geist-mono), monospace;
+  }
+  .font-pixel {
+    font-family: var(--font-geist-pixel-square), monospace;
   }
   .bg-grid {
     background-image: linear-gradient(to right, rgba(28, 27, 25, 0.08) 1px, transparent 1px),

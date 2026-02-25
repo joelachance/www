@@ -3,6 +3,7 @@ import ConvexAuthProvider from "@/components/convex-auth-provider";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Geist, Geist_Mono } from "next/font/google";
+import { GeistPixelSquare } from "geist/font/pixel";
 import localFont from "next/font/local";
 import { siteConfig } from "@/config";
 import "./globals.css";
@@ -16,6 +17,8 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const geistPixel = GeistPixelSquare;
 
 const flauta = localFont({
   src: "../public/fonts/flauta.ttf",
@@ -57,7 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${flauta.variable} ${appleGaramond.variable} ${fkGroteskBlack.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${geistPixel.variable} ${flauta.variable} ${appleGaramond.variable} ${fkGroteskBlack.variable} antialiased`}
       >
         <ConvexAuthNextjsServerProvider>
           <ConvexAuthProvider>
