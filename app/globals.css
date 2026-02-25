@@ -107,4 +107,29 @@ body {
       linear-gradient(to bottom, rgba(28, 27, 25, 0.08) 1px, transparent 1px);
     background-size: 56px 56px;
   }
+  .frame-corners-top,
+  .frame-corners-bottom {
+    position: relative;
+  }
+  .frame-corners-top::before,
+  .frame-corners-bottom::after {
+    content: "";
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    height: 6px;
+    pointer-events: none;
+  }
+  .frame-corners-top::before {
+    top: -1px;
+    background:
+      linear-gradient(135deg, var(--border) 0 50%, transparent 50%) left top / 6px 6px no-repeat,
+      linear-gradient(225deg, var(--border) 0 50%, transparent 50%) right top / 6px 6px no-repeat;
+  }
+  .frame-corners-bottom::after {
+    bottom: -1px;
+    background:
+      linear-gradient(45deg, var(--border) 0 50%, transparent 50%) left bottom / 6px 6px no-repeat,
+      linear-gradient(-45deg, var(--border) 0 50%, transparent 50%) right bottom / 6px 6px no-repeat;
+  }
 }

@@ -46,9 +46,10 @@ export default function Home() {
       {isAuthenticated ? (
         <Dashboard />
       ) : (
-        <main className="pt-28">
-          <section className="mx-auto grid w-full max-w-6xl gap-10 px-6 pb-16 pt-8 lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="space-y-6">
+        <main>
+          <section className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom">
+            <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="space-y-6 p-6 pb-12 pt-8 md:p-10 md:pb-14 lg:p-12">
               <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-3 py-1 text-xs uppercase tracking-[0.3em] text-muted-foreground">
                 {marketingConfig.hero.eyebrow}
               </div>
@@ -79,8 +80,8 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <div className="rounded-3xl border border-border/70 bg-grid p-6 shadow-sm">
-              <div className="flex h-full flex-col justify-between gap-6 rounded-2xl border border-border/70 bg-background/80 p-6">
+            <div className="border-t border-border bg-grid p-6 md:p-10 lg:border-l lg:border-t-0 lg:p-12">
+              <div className="flex h-full flex-col justify-between gap-6">
                 <div>
                   <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
                     {siteConfig.brand.tagline}
@@ -102,9 +103,10 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            </div>
           </section>
 
-          <section id="product" className="mx-auto w-full max-w-6xl px-6 py-16">
+          <section id="product" className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
             <SectionHeader
               eyebrow="Products"
               title="Launch with modular product blocks"
@@ -114,7 +116,7 @@ export default function Home() {
               {productsConfig.products.map((product) => (
                 <div
                   key={product.id}
-                  className="flex h-full flex-col justify-between rounded-2xl border border-border/70 bg-background/70 p-6"
+                  className="flex h-full flex-col justify-between rounded-none border border-border bg-background p-6"
                 >
                   <div className="space-y-3">
                     <span className="inline-flex rounded-full border border-border px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">
@@ -140,7 +142,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section id="features" className="mx-auto w-full max-w-6xl px-6 py-16">
+          <section id="features" className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
             <SectionHeader
               eyebrow="Features"
               title="Everything is wired for you"
@@ -148,7 +150,7 @@ export default function Home() {
             />
             <div className="mt-10 grid gap-6 md:grid-cols-2">
               {marketingConfig.features.map((feature) => (
-                <div key={feature.title} className="rounded-2xl border border-border/70 bg-background/70 p-6">
+                <div key={feature.title} className="rounded-none border border-border bg-background p-6">
                   <h3 className="text-lg font-brand">{feature.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{feature.description}</p>
                 </div>
@@ -156,10 +158,10 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="mx-auto w-full max-w-6xl px-6 py-16">
+          <section className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
             <div className="grid gap-8 lg:grid-cols-2">
               {marketingConfig.sections.map((section) => (
-                <div key={section.id} className="rounded-2xl border border-border/70 bg-background/70 p-6">
+                <div key={section.id} className="rounded-none border border-border bg-background p-6">
                   <h3 className="text-xl font-brand">{section.title}</h3>
                   <p className="mt-3 text-sm text-muted-foreground">{section.body}</p>
                   <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
@@ -175,7 +177,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section id="pricing" className="mx-auto w-full max-w-6xl px-6 py-16">
+          <section id="pricing" className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
             <SectionHeader
               eyebrow={productsConfig.pricing.eyebrow}
               title={productsConfig.pricing.title}
@@ -185,10 +187,10 @@ export default function Home() {
               {productsConfig.pricing.plans.map((plan) => (
                 <div
                   key={plan.name}
-                  className={`flex h-full flex-col justify-between rounded-2xl border p-6 ${
+                  className={`flex h-full flex-col justify-between rounded-none border p-6 ${
                     plan.highlighted
                       ? "border-[var(--brand)] bg-[rgba(228,109,63,0.08)]"
-                      : "border-border/70 bg-background/70"
+                      : "border-border bg-background"
                   }`}
                 >
                   <div className="space-y-3">
@@ -218,7 +220,7 @@ export default function Home() {
             </p>
           </section>
 
-          <section className="mx-auto w-full max-w-6xl px-6 py-16">
+          <section className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
             <SectionHeader
               eyebrow="Testimonials"
               title="Teams keep shipping with config"
@@ -226,7 +228,7 @@ export default function Home() {
             />
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {marketingConfig.testimonials.map((testimonial) => (
-                <div key={testimonial.name} className="rounded-2xl border border-border/70 bg-background/70 p-6">
+                <div key={testimonial.name} className="rounded-none border border-border bg-background p-6">
                   <p className="text-sm">“{testimonial.quote}”</p>
                   <div className="mt-4 text-xs text-muted-foreground">
                     {testimonial.name} · {testimonial.role}, {testimonial.company}
@@ -236,7 +238,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section id="faq" className="mx-auto w-full max-w-6xl px-6 py-16">
+          <section id="faq" className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
             <SectionHeader
               eyebrow="FAQ"
               title="Questions, answered"
@@ -244,7 +246,7 @@ export default function Home() {
             />
             <div className="mt-8 grid gap-4 md:grid-cols-2">
               {marketingConfig.faq.map((item) => (
-                <div key={item.question} className="rounded-2xl border border-border/70 bg-background/70 p-6">
+                <div key={item.question} className="rounded-none border border-border bg-background p-6">
                   <div className="text-sm font-semibold">{item.question}</div>
                   <p className="mt-2 text-sm text-muted-foreground">{item.answer}</p>
                 </div>
@@ -252,8 +254,8 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="mx-auto w-full max-w-6xl px-6 py-16">
-            <div className="rounded-3xl border border-border/70 bg-[var(--brand)]/10 p-8 md:p-12">
+          <section className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
+            <div className="rounded-none border border-border bg-[var(--brand)]/10 p-8 md:p-12">
               <SectionHeader
                 eyebrow="Ready"
                 title="Make your product story editable"
