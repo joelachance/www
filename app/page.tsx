@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRef, useState } from "react";
 import { useAuthToken } from "@convex-dev/auth/react";
 import Nav from "@/components/nav";
 import Footer from "@/components/footer";
@@ -37,6 +38,16 @@ export default function Home() {
   const token = useAuthToken();
   const isAuthenticated = Boolean(token);
   const testimonials = marketingConfig.testimonials;
+  const [openFaqItems, setOpenFaqItems] = useState<string[]>([]);
+  const faqContentRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  const toggleFaq = (question: string) => {
+    setOpenFaqItems((prev) =>
+      prev.includes(question)
+        ? prev.filter((item) => item !== question)
+        : [...prev, question]
+    );
+  };
 
   if (token === undefined) {
     return null;
@@ -51,7 +62,7 @@ export default function Home() {
         <main>
           <section className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom">
             <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="space-y-6 p-6 pb-12 pt-8 md:p-10 md:pb-14 lg:p-12">
+            <div className="space-y-6 p-6 pb-12 pt-8 md:p-10 md:pb-14 lg:py-10 lg:pl-10 lg:pr-7">
               <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-3 py-1 text-xs uppercase tracking-[0.3em] text-muted-foreground">
                 {marketingConfig.hero.eyebrow}
               </div>
@@ -73,7 +84,7 @@ export default function Home() {
                   </Link>
                 </Button>
               </div>
-              <div className="grid gap-2 text-sm text-muted-foreground md:grid-cols-2">
+              <div className="grid gap-2 text-sm text-muted-foreground">
                 {marketingConfig.hero.bullets.map((bullet) => (
                   <div key={bullet} className="flex items-center gap-2">
                     <span className="size-1.5 rounded-full bg-[var(--brand)]" />
@@ -82,9 +93,9 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <div className="border-t border-border bg-grid p-6 md:p-10 lg:border-l lg:border-t-0 lg:p-12">
-              <div className="flex h-full flex-col justify-between gap-6">
-                <div>
+            <div className="border-t border-border p-6 md:p-10 lg:border-l lg:border-t-0 lg:py-10 lg:pl-7 lg:pr-10">
+              <div className="flex h-full flex-col justify-evenly gap-6">
+                <div className="mx-auto w-full max-w-sm text-left">
                   <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
                     {siteConfig.brand.tagline}
                   </div>
@@ -92,14 +103,17 @@ export default function Home() {
                     {siteConfig.brand.description}
                   </div>
                 </div>
-                <div className="grid gap-4">
+                <div className="mx-auto grid w-full max-w-sm gap-4">
                   {marketingConfig.stats.map((stat) => (
-                    <div key={stat.label} className="flex items-center justify-between">
+                    <div
+                      key={stat.label}
+                      className="flex items-center justify-between"
+                    >
                       <div>
                         <div className="text-xs text-muted-foreground">{stat.label}</div>
                         <div className="text-lg font-brand">{stat.value}</div>
                       </div>
-                      <div className="text-xs text-muted-foreground">{stat.detail}</div>
+                      <div className="ml-4 mr-2 text-right text-xs text-muted-foreground">{stat.detail}</div>
                     </div>
                   ))}
                 </div>
@@ -108,39 +122,45 @@ export default function Home() {
             </div>
           </section>
 
-          <section id="product" className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
-            <SectionHeader
-              eyebrow="Products"
-              title="Launch with modular product blocks"
-              subtitle="Use JSON to define products, positioning, and CTAs. Each block renders automatically."
+          <section id="product" className="bg-noise-gradient relative isolate mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom py-16">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 z-0 bg-[url('/noise.svg')] bg-repeat opacity-[0.5] [background-size:160px_160px] dark:opacity-[0.28] dark:[background-size:180px_180px]"
             />
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {productsConfig.products.map((product) => (
-                <div
-                  key={product.id}
-                  className="flex h-full flex-col justify-between rounded-none border border-border bg-background p-6"
-                >
-                  <div className="space-y-3">
-                    <span className="inline-flex rounded-full border border-border px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">
-                      {product.badge}
-                    </span>
-                    <h3 className="text-xl font-brand">{product.name}</h3>
-                    <p className="text-sm text-muted-foreground">{product.tagline}</p>
-                    <p className="text-sm">{product.description}</p>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      {product.bullets.map((bullet) => (
-                        <li key={bullet} className="flex items-center gap-2">
-                          <span className="size-1.5 rounded-full bg-[var(--brand)]" />
-                          {bullet}
-                        </li>
-                      ))}
-                    </ul>
+            <div className="relative z-10 px-6">
+              <SectionHeader
+                eyebrow="Products"
+                title="Launch with modular product blocks"
+                subtitle="Use JSON to define products, positioning, and CTAs. Each block renders automatically."
+              />
+              <div className="mt-10 grid gap-6 md:grid-cols-3">
+                {productsConfig.products.map((product) => (
+                  <div
+                    key={product.id}
+                    className="relative z-30 flex h-full flex-col justify-between rounded-none border border-border bg-background p-6"
+                  >
+                    <div className="space-y-3">
+                      <span className="inline-flex rounded-full border border-border px-2 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">
+                        {product.badge}
+                      </span>
+                      <h3 className="text-xl font-brand">{product.name}</h3>
+                      <p className="text-sm text-muted-foreground">{product.tagline}</p>
+                      <p className="text-sm">{product.description}</p>
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        {product.bullets.map((bullet) => (
+                          <li key={bullet} className="flex items-center gap-2">
+                            <span className="size-1.5 rounded-full bg-[var(--brand)]" />
+                            {bullet}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <Button variant="outline" className="mt-6" asChild>
+                      <Link href={product.cta.href}>{product.cta.label}</Link>
+                    </Button>
                   </div>
-                  <Button variant="outline" className="mt-6" asChild>
-                    <Link href={product.cta.href}>{product.cta.label}</Link>
-                  </Button>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </section>
 
@@ -179,47 +199,53 @@ export default function Home() {
             </div>
           </section>
 
-          <section id="pricing" className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
-            <SectionHeader
-              eyebrow={productsConfig.pricing.eyebrow}
-              title={productsConfig.pricing.title}
-              subtitle={productsConfig.pricing.subtitle}
+          <section id="pricing" className="bg-noise-gradient relative isolate mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom py-16">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 z-0 bg-[url('/noise.svg')] bg-repeat opacity-[0.5] [background-size:160px_160px] dark:opacity-[0.28] dark:[background-size:180px_180px]"
             />
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {productsConfig.pricing.plans.map((plan) => (
-                <div
-                  key={plan.name}
-                  className={`flex h-full flex-col justify-between rounded-none border p-6 ${
-                    plan.highlighted
-                      ? "border-[var(--brand)] bg-[rgba(228,109,63,0.08)]"
-                      : "border-border bg-background"
-                  }`}
-                >
-                  <div className="space-y-3">
-                    <h3 className="text-lg font-brand">{plan.name}</h3>
-                    <div className="text-3xl font-brand">
-                      {plan.price}
-                      <span className="text-xs text-muted-foreground"> {plan.cadence}</span>
+            <div className="relative z-10 px-6">
+              <SectionHeader
+                eyebrow={productsConfig.pricing.eyebrow}
+                title={productsConfig.pricing.title}
+                subtitle={productsConfig.pricing.subtitle}
+              />
+              <div className="mt-10 grid gap-6 md:grid-cols-3">
+                {productsConfig.pricing.plans.map((plan) => (
+                  <div
+                    key={plan.name}
+                    className={`flex h-full flex-col justify-between rounded-none border p-6 ${
+                      plan.highlighted
+                        ? "border-[var(--brand)] bg-background"
+                        : "border-border bg-background"
+                    }`}
+                  >
+                    <div className="space-y-3">
+                      <h3 className="text-lg font-brand">{plan.name}</h3>
+                      <div className="text-3xl font-brand">
+                        {plan.price}
+                        <span className="text-xs text-muted-foreground"> {plan.cadence}</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{plan.description}</p>
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        {plan.features.map((feature) => (
+                          <li key={feature} className="flex items-center gap-2">
+                            <span className="size-1.5 rounded-full bg-[var(--brand)]" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <p className="text-sm text-muted-foreground">{plan.description}</p>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      {plan.features.map((feature) => (
-                        <li key={feature} className="flex items-center gap-2">
-                          <span className="size-1.5 rounded-full bg-[var(--brand)]" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
+                    <Button className="mt-6" variant={plan.highlighted ? "default" : "outline"} asChild>
+                      <Link href={plan.cta.href}>{plan.cta.label}</Link>
+                    </Button>
                   </div>
-                  <Button className="mt-6" variant={plan.highlighted ? "default" : "outline"} asChild>
-                    <Link href={plan.cta.href}>{plan.cta.label}</Link>
-                  </Button>
-                </div>
-              ))}
+                ))}
+              </div>
+              <p className="mt-6 text-xs text-muted-foreground">
+                {productsConfig.pricing.disclaimer}
+              </p>
             </div>
-            <p className="mt-6 text-xs text-muted-foreground">
-              {productsConfig.pricing.disclaimer}
-            </p>
           </section>
 
           <section className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom py-16">
@@ -279,27 +305,58 @@ export default function Home() {
               />
             </div>
             <div className="mt-8 w-full divide-y divide-border border-y border-border">
-              {marketingConfig.faq.map((item) => (
-                <details
-                  key={item.question}
-                  className="group w-full bg-background px-6 py-4"
-                >
-                  <summary className="flex cursor-pointer list-none items-center gap-2 text-sm [&::-webkit-details-marker]:hidden [&::marker]:content-['']">
-                    <span className="relative inline-flex size-3 shrink-0 items-center justify-center text-[0.55rem] leading-none text-muted-foreground">
-                      <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-200 group-open:opacity-0">
-                        +
+              {marketingConfig.faq.map((item) => {
+                const isOpen = openFaqItems.includes(item.question);
+
+                return (
+                  <div key={item.question} className="w-full bg-background px-6 py-4">
+                    <button
+                      type="button"
+                      onClick={() => toggleFaq(item.question)}
+                      className="flex w-full cursor-pointer items-center gap-2 text-left text-sm"
+                    >
+                      <span className="relative inline-flex size-3 shrink-0 items-center justify-center text-[0.55rem] leading-none text-muted-foreground">
+                        <span
+                          className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${
+                            isOpen ? "opacity-0" : "opacity-100"
+                          }`}
+                        >
+                          +
+                        </span>
+                        <span
+                          className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${
+                            isOpen ? "opacity-100" : "opacity-0"
+                          }`}
+                        >
+                          -
+                        </span>
                       </span>
-                      <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-open:opacity-100">
-                        -
+                      <span
+                        className={`font-medium transition-colors duration-200 ${
+                          isOpen ? "text-foreground" : "text-muted-foreground/80"
+                        }`}
+                      >
+                        {item.question}
                       </span>
-                    </span>
-                    <span className="font-medium text-muted-foreground/80 transition-colors duration-200 group-open:text-foreground">
-                      {item.question}
-                    </span>
-                  </summary>
-                  <p className="ml-5 mt-3 text-sm text-muted-foreground">{item.answer}</p>
-                </details>
-              ))}
+                    </button>
+                    <div
+                      ref={(element) => {
+                        faqContentRefs.current[item.question] = element;
+                      }}
+                      style={{
+                        maxHeight: isOpen
+                          ? `${faqContentRefs.current[item.question]?.scrollHeight ?? 0}px`
+                          : "0px",
+                      }}
+                      className={`ml-5 overflow-hidden transition-[max-height,opacity,margin-top] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                        isOpen ? "mt-3 opacity-100" : "mt-0 opacity-0"
+                      }`}
+                    >
+                      <p className="text-sm text-muted-foreground">{item.answer}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </section>
 

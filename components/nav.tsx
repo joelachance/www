@@ -68,7 +68,7 @@ export default function Nav() {
               </div>
             </div>
             <button
-              className="md:hidden my-4 flex items-center justify-center size-9 rounded-full border border-border"
+              className="md:hidden my-4 flex items-center justify-center size-9"
               onClick={() => setOpen((prev) => !prev)}
               aria-label="Toggle menu"
             >
