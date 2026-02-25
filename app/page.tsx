@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useAuthToken } from "@convex-dev/auth/react";
 import Nav from "@/components/nav";
@@ -35,6 +36,7 @@ const SectionHeader = ({
 export default function Home() {
   const token = useAuthToken();
   const isAuthenticated = Boolean(token);
+  const testimonials = marketingConfig.testimonials;
 
   if (token === undefined) {
     return null;
@@ -220,62 +222,119 @@ export default function Home() {
             </p>
           </section>
 
-          <section className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
-            <SectionHeader
-              eyebrow="Testimonials"
-              title="Teams keep shipping with config"
-              subtitle="A few notes from teams that replaced hard-coded marketing sites."
-            />
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {marketingConfig.testimonials.map((testimonial) => (
-                <div key={testimonial.name} className="rounded-none border border-border bg-background p-6">
-                  <p className="text-sm">“{testimonial.quote}”</p>
-                  <div className="mt-4 text-xs text-muted-foreground">
-                    {testimonial.name} · {testimonial.role}, {testimonial.company}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section id="faq" className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
-            <SectionHeader
-              eyebrow="FAQ"
-              title="Questions, answered"
-              subtitle="Everything you need to hand off to your team."
-            />
-            <div className="mt-8 grid gap-4 md:grid-cols-2">
-              {marketingConfig.faq.map((item) => (
-                <div key={item.question} className="rounded-none border border-border bg-background p-6">
-                  <div className="text-sm font-semibold">{item.question}</div>
-                  <p className="mt-2 text-sm text-muted-foreground">{item.answer}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
-            <div className="rounded-none border border-border bg-[var(--brand)]/10 p-8 md:p-12">
+          <section className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom py-16">
+            <div className="px-6">
               <SectionHeader
-                eyebrow="Ready"
-                title="Make your product story editable"
-                subtitle="Point your team to /config and start shipping updates in minutes."
+                eyebrow="Testimonials"
+                title="Teams keep shipping with config"
+                subtitle="A few notes from teams that replaced hard-coded marketing sites."
               />
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Button asChild>
-                  <Link href={marketingConfig.hero.primaryCta.href}>
-                    {marketingConfig.hero.primaryCta.label}
-                  </Link>
-                </Button>
-                <Button variant="outline" asChild>
-                  <Link href="/signin">Sign in</Link>
-                </Button>
+            </div>
+            <div className="mt-10 overflow-hidden">
+              <div className="testimonial-track flex w-max gap-6">
+                {[...testimonials, ...testimonials].map((testimonial, index) => (
+                  <div
+                    key={`${testimonial.name}-${index}`}
+                    className="w-[16.5rem] shrink-0 rounded-lg border border-border bg-background px-5 py-7 md:w-[18.5rem] md:px-6 md:py-8"
+                  >
+                    <div className="flex items-center gap-3">
+                      {testimonial.avatar ? (
+                        <Image
+                          src={testimonial.avatar}
+                          alt={`${testimonial.name} avatar`}
+                          width={44}
+                          height={44}
+                          className="size-11 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex size-11 items-center justify-center rounded-full border border-border text-xs font-semibold text-muted-foreground">
+                          {testimonial.name
+                            .split(" ")
+                            .map((part) => part[0])
+                            .join("")
+                            .slice(0, 2)
+                            .toUpperCase()}
+                        </div>
+                      )}
+                      <div className="text-xs text-muted-foreground">
+                        <div className="font-medium text-foreground">{testimonial.name}</div>
+                        <div>
+                          {testimonial.role}, {testimonial.company}
+                        </div>
+                      </div>
+                    </div>
+                    <p className="mt-5 text-sm leading-relaxed">“{testimonial.quote}”</p>
+                  </div>
+                ))}
               </div>
+            </div>
+          </section>
+
+          <section id="faq" className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom py-16">
+            <div className="px-6">
+              <SectionHeader
+                eyebrow="FAQ"
+                title="Questions, answered"
+                subtitle="Everything you need to hand off to your team."
+              />
+            </div>
+            <div className="mt-8 w-full divide-y divide-border border-y border-border">
+              {marketingConfig.faq.map((item) => (
+                <details
+                  key={item.question}
+                  className="group w-full bg-background px-6 py-4"
+                >
+                  <summary className="flex cursor-pointer list-none items-center gap-2 text-sm [&::-webkit-details-marker]:hidden [&::marker]:content-['']">
+                    <span className="relative inline-flex size-3 shrink-0 items-center justify-center text-[0.55rem] leading-none text-muted-foreground">
+                      <span className="absolute inset-0 flex items-center justify-center transition-opacity duration-200 group-open:opacity-0">
+                        +
+                      </span>
+                      <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-open:opacity-100">
+                        -
+                      </span>
+                    </span>
+                    <span className="font-medium text-muted-foreground/80 transition-colors duration-200 group-open:text-foreground">
+                      {item.question}
+                    </span>
+                  </summary>
+                  <p className="ml-5 mt-3 text-sm text-muted-foreground">{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom bg-[var(--brand)]/10 px-6 py-16 md:px-8 md:py-20">
+            <SectionHeader
+              eyebrow="Ready"
+              title="Make your product story editable"
+              subtitle="Point your team to /config and start shipping updates in minutes."
+            />
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button asChild>
+                <Link href={marketingConfig.hero.primaryCta.href}>
+                  {marketingConfig.hero.primaryCta.label}
+                </Link>
+              </Button>
             </div>
           </section>
         </main>
       )}
       <Footer />
+      <style jsx>{`
+        .testimonial-track {
+          animation: testimonial-scroll 48s linear infinite;
+          will-change: transform;
+        }
+
+        @keyframes testimonial-scroll {
+          from {
+            transform: translateX(-50%);
+          }
+          to {
+            transform: translateX(0%);
+          }
+        }
+      `}</style>
     </>
   );
 }

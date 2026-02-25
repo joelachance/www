@@ -71,6 +71,7 @@ export type MarketingConfig = {
     name: string;
     role: string;
     company: string;
+    avatar?: string;
   }[];
   faq: {
     question: string;

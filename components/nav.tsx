@@ -27,7 +27,7 @@ export default function Nav() {
               <Logo />
             </div>
             <div className="ml-auto hidden items-stretch gap-3 md:flex">
-              <div className="flex items-center gap-8 border-x border-border px-6 text-sm">
+              <div className="flex items-center gap-8 px-6 text-sm">
                 {navItems.map((item) => (
                   <a
                     key={item.label}
