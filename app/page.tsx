@@ -7,7 +7,7 @@ import { useAuthToken } from "@convex-dev/auth/react";
 import Nav from "@/components/nav";
 import Footer from "@/components/footer";
 import Dashboard from "@/components/dashboard";
-import { marketingConfig, productsConfig, siteConfig } from "@/config";
+import { copyConfig, flagsConfig, marketingConfig, productsConfig, siteConfig } from "@/config";
 import { Button } from "@/components/ui/button";
 
 const SectionHeader = ({
@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <>
       <Nav />
-      {isAuthenticated ? (
+      {isAuthenticated && flagsConfig.showDashboard ? (
         <Dashboard />
       ) : (
         <main>
@@ -122,6 +122,7 @@ export default function Home() {
             </div>
           </section>
 
+          {flagsConfig.showProductSection ? (
           <section id="product" className="bg-noise-gradient relative isolate mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom py-16">
             <div
               aria-hidden
@@ -129,9 +130,9 @@ export default function Home() {
             />
             <div className="relative z-10 px-6">
               <SectionHeader
-                eyebrow="Products"
-                title="Launch with modular product blocks"
-                subtitle="Use JSON to define products, positioning, and CTAs. Each block renders automatically."
+                eyebrow={copyConfig.home.productsEyebrow}
+                title={copyConfig.home.productsTitle}
+                subtitle={copyConfig.home.productsSubtitle}
               />
               <div className="mt-10 grid gap-6 md:grid-cols-3">
                 {productsConfig.products.map((product) => (
@@ -163,10 +164,12 @@ export default function Home() {
               </div>
             </div>
           </section>
+          ) : null}
 
+          {flagsConfig.showFeaturesSection ? (
           <section id="features" className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
             <SectionHeader
-              eyebrow="Features"
+              eyebrow={copyConfig.home.featuresEyebrow}
               title="Everything is wired for you"
               subtitle="Auth, dashboard, and marketing templates are already in place. Update the JSON and ship."
             />
@@ -179,6 +182,7 @@ export default function Home() {
               ))}
             </div>
           </section>
+          ) : null}
 
           <section className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom px-6 py-16">
             <div className="grid gap-8 lg:grid-cols-2">
@@ -199,6 +203,7 @@ export default function Home() {
             </div>
           </section>
 
+          {flagsConfig.showPricingSection ? (
           <section id="pricing" className="bg-noise-gradient relative isolate mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom py-16">
             <div
               aria-hidden
@@ -247,11 +252,13 @@ export default function Home() {
               </p>
             </div>
           </section>
+          ) : null}
 
+          {flagsConfig.showTestimonialsSection ? (
           <section className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom py-16">
             <div className="px-6">
               <SectionHeader
-                eyebrow="Testimonials"
+                eyebrow={copyConfig.home.testimonialsEyebrow}
                 title="Teams keep shipping with config"
                 subtitle="A few notes from teams that replaced hard-coded marketing sites."
               />
@@ -295,7 +302,9 @@ export default function Home() {
               </div>
             </div>
           </section>
+          ) : null}
 
+          {flagsConfig.showFaqSection ? (
           <section id="faq" className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom py-16">
             <div className="px-6">
               <SectionHeader
@@ -359,10 +368,12 @@ export default function Home() {
               })}
             </div>
           </section>
+          ) : null}
 
+          {flagsConfig.showFinalCta ? (
           <section className="mx-auto w-full max-w-6xl border-x border-b border-border frame-corners-top frame-corners-bottom bg-[var(--brand)]/10 px-6 py-16 md:px-8 md:py-20">
             <SectionHeader
-              eyebrow="Ready"
+              eyebrow={copyConfig.home.readyEyebrow}
               title="Make your product story editable"
               subtitle="Point your team to /config and start shipping updates in minutes."
             />
@@ -374,6 +385,7 @@ export default function Home() {
               </Button>
             </div>
           </section>
+          ) : null}
         </main>
       )}
       <Footer />

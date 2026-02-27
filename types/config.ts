@@ -153,3 +153,28 @@ export type AuthConfig = {
     label: string;
   }[];
 };
+
+export type FlagsConfig = {
+  showProductSection: boolean;
+  showFeaturesSection: boolean;
+  showPricingSection: boolean;
+  showTestimonialsSection: boolean;
+  showFaqSection: boolean;
+  showFinalCta: boolean;
+  showDashboard: boolean;
+};
+
+export type CopyConfig = {
+  home: {
+    productsEyebrow: string;
+    productsTitle: string;
+    productsSubtitle: string;
+    featuresEyebrow: string;
+    testimonialsEyebrow: string;
+    readyEyebrow: string;
+  };
+  dashboard: {
+    recentActivityTitle: string;
+    quickActionsTitle: string;
+  };
+};

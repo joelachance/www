@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { dashboardConfig } from "@/config";
+import { copyConfig, dashboardConfig } from "@/config";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -59,7 +59,7 @@ export default function Dashboard() {
         <div className="space-y-6">
           <Card className="border-border/70 bg-background/60">
             <CardHeader>
-              <CardTitle className="text-lg">Recent activity</CardTitle>
+              <CardTitle className="text-lg">{copyConfig.dashboard.recentActivityTitle}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {dashboardConfig.activity.map((item) => (
@@ -76,7 +76,7 @@ export default function Dashboard() {
 
           <Card className="border-border/70 bg-background/60">
             <CardHeader>
-              <CardTitle className="text-lg">Quick actions</CardTitle>
+              <CardTitle className="text-lg">{copyConfig.dashboard.quickActionsTitle}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               {dashboardConfig.quickActions.map((action) => (
